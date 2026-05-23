@@ -1,3 +1,5 @@
+import { motion } from 'framer-motion'
+import { ArrowLeft, Dices, Play, Sparkles, Shield, User, Globe } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { getWorldRoutes } from '../data/routes'
 import { talents } from '../data/talents'
@@ -22,9 +24,13 @@ export function CharacterCreator({ worldId, cheatNext, onCreate, onBack }: Chara
   const set = <K extends keyof CharacterDraft>(key: K, value: CharacterDraft[K]) => setDraft((prev) => ({ ...prev, [key]: value }))
 
   return (
-    <main className={`creator ${world.theme}`}>
+    <motion.main 
+      className={`creator ${world.theme}`}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+    >
       <header className="topbar">
-        <button onClick={onBack}>返回主页</button>
+        <button onClick={onBack}><ArrowLeft size={18} /> 返回主页</button>
         <div>
           <span>角色创建</span>
           <strong>{world.name}</strong>
@@ -32,7 +38,11 @@ export function CharacterCreator({ worldId, cheatNext, onCreate, onBack }: Chara
       </header>
 
       <section className="creator-layout">
-        <div className="form-panel">
+        <motion.div 
+          className="form-panel"
+          initial={{ x: -20, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+        >
           <label>
             姓名
             <input value={draft.name} onChange={(event) => set('name', event.target.value)} placeholder="输入姓名" />
@@ -63,34 +73,50 @@ export function CharacterCreator({ worldId, cheatNext, onCreate, onBack }: Chara
           </label>
           <div className="creator-hints">
             <article>
-              <span>开局定位</span>
+              <span><User size={14} /> 开局定位</span>
               <strong>{draft.origin}</strong>
               <p>{getOriginHint(draft.origin)}</p>
             </article>
             <article>
-              <span>难度节奏</span>
+              <span><Shield size={14} /> 难度节奏</span>
               <strong>{draft.difficulty}</strong>
               <p>{getDifficultyHint(draft.difficulty)}</p>
             </article>
           </div>
           <div className="button-row">
-            <button onClick={() => setDraft(randomCharacter(worldId))}>随机角色</button>
-            <button className="primary" onClick={() => onCreate(draft)} disabled={!draft.name.trim()}>开始此生</button>
+            <button onClick={() => setDraft(randomCharacter(worldId))}><Dices size={18} /> 随机角色</button>
+            <button className="primary" onClick={() => onCreate(draft)} disabled={!draft.name.trim()}>
+              <Play size={18} fill="currentColor" /> 开始此生
+            </button>
           </div>
-        </div>
+        </motion.div>
 
-        <aside className="preview-panel">
+        <motion.aside 
+          className="preview-panel"
+          initial={{ x: 20, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+        >
           <div>
             <h1>{draft.name || '未命名'}</h1>
             <p>{draft.gender} · {draft.origin} · {draft.talent} · {draft.difficulty}</p>
-            <p>{talent?.desc}</p>
+            <p className="talent-desc"><Sparkles size={14} /> {talent?.desc}</p>
           </div>
-          {cheatNext && <strong className="cheat-badge">本局将以满资源开局，生效后自动关闭。</strong>}
+          {cheatNext && (
+            <motion.strong 
+              className="cheat-badge"
+              initial={{ scale: 0.9 }}
+              animate={{ scale: 1 }}
+              transition={{ repeat: Infinity, repeatType: 'reverse', duration: 1 }}
+            >
+              <Sparkles size={14} /> 本局将以满资源开局，生效后自动关闭。
+            </motion.strong>
+          )}
           <div className="world-note">
-            <span>{world.name}</span>
+            <span><Globe size={14} /> {world.name}</span>
             <strong>{world.subtitle}</strong>
           </div>
           <div className="creator-routes">
+            <span className="route-label">预设路线</span>
             {routes.map((route) => (
               <article key={route.id}>
                 <span>{route.name}</span>
@@ -98,9 +124,9 @@ export function CharacterCreator({ worldId, cheatNext, onCreate, onBack }: Chara
               </article>
             ))}
           </div>
-        </aside>
+        </motion.aside>
       </section>
-    </main>
+    </motion.main>
   )
 }
 
@@ -117,3 +143,4 @@ function getDifficultyHint(difficulty: Difficulty) {
   if (difficulty === '残酷') return '事件惩罚更明显，失败结局更近，但稀有路线更刺激。'
   return '标准节奏，平均一局更适合完整体验。'
 }
+

@@ -2008,3 +2008,135 @@ meter {
     padding: 18px;
   }
 }
+
+/* Modern UI Enhancements */
+.meter-container {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+
+.meter-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ffd36f, #f18b4c);
+  border-radius: 3px;
+}
+
+.hud div svg,
+.status-line span svg,
+.home-actions button svg,
+.header-actions button svg,
+.section-title strong svg,
+.log-title svg {
+  margin-right: 6px;
+  opacity: 0.8;
+  vertical-align: text-bottom;
+}
+
+.cheat-badge {
+  display: inline-flex !important;
+  align-items: center;
+  padding: 2px 8px !important;
+  background: rgba(255, 211, 111, 0.15) !important;
+  border: 1px solid rgba(255, 211, 111, 0.3) !important;
+  border-radius: 4px !important;
+  color: #ffd36f !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+}
+
+.log-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 500px;
+  overflow-y: auto;
+  padding-right: 8px;
+  scroll-behavior: smooth;
+}
+
+.log-list p {
+  margin: 0;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  border-left: 3px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.log-list p:hover {
+  border-left-color: #ffd36f;
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateX(4px);
+}
+
+.log-list p span {
+  display: inline-block;
+  min-width: 45px;
+  font-weight: 800;
+  color: #ffd36f;
+  margin-right: 12px;
+  opacity: 0.9;
+}
+
+.world-tile {
+  position: relative;
+  overflow: hidden;
+}
+
+.world-tile::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.6s;
+}
+
+.world-tile:hover::after {
+  transform: translateX(100%);
+}
+
+.action-grid button em {
+  display: block;
+  margin-top: 8px;
+  font-style: normal;
+  font-weight: 600;
+  color: #ffd36f;
+}
+
+.primary svg {
+  fill: currentColor;
+}
+
+.home-modal header h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Glassmorphism Refinement */
+.brand-panel,
+.event-panel,
+.side-panel,
+.log-panel,
+.action-board,
+.milestone-board,
+.ending-radar {
+  background: rgba(15, 20, 30, 0.7) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37) !important;
+}
+
+.game-shell {
+  background-attachment: fixed;
+}
